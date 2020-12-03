@@ -16,7 +16,32 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = [];
+
+  let board = new Board({n: n});
+
+  const helper = (curRow, curCol ) => {
+
+    if (curRow === n && !board.hasAnyRooksConflicts()) {
+      solution = board.attributes[0];
+      return;
+    }
+
+    board.togglePiece(curRow, curCol);
+
+    if (board.hasAnyRooksConflicts()) {
+      board.togglePiece(curRow, curCol);
+      if (curRow < n) {
+        helper(curRow, curCol + 1);
+      }
+    } else {
+      helper(curRow + 1, 0);
+    }
+  };
+  helper(0, 0);
+
+
+
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -24,7 +49,32 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+
+  let board = new Board({n: n});
+
+  const helper = (curRow, curCol ) => {
+  debugger;
+    if (curRow === n && !board.hasAnyRooksConflicts()) {
+      solutionCount++;
+      return;
+    }
+
+    board.togglePiece(curRow, curCol);
+
+    if (board.hasAnyRooksConflicts()) {
+      board.togglePiece(curRow, curCol);
+      if (curRow < n) {
+        helper(curRow, curCol + 1);
+      }
+    } else {
+      helper(curRow + 1, 0);
+    }
+  };
+  for (var i = 0; i < n; i++) {
+    helper(0, i);
+  }
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -45,3 +95,4 @@ window.countNQueensSolutions = function(n) {
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
