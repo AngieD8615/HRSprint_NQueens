@@ -175,7 +175,7 @@
           row++;
         }
       } else {
-        let col = 3;
+        let col = n - 1;
         for (var row = minorDiagonalColumnIndexAtFirstRow - col; row < n; row++) {
           sum += this.get(row)[col];
           col--;
